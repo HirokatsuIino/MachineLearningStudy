@@ -35,13 +35,12 @@ customer_master = pd.read_csv('sample_20200325/1章/customer_master.csv')
 print('customer_master-----------S')
 print(customer_master)
 
-item_master = pd.read_csv('sample_20200325/1章/item_master.csv')
-print('item_master-----------S')
-print(item_master)
-
-
-
 # 各種データファイル読み込み -E
+
+# 表示列調整
+print('customer_master=', customer_master[["customer_id", "customer_name"]])
+
+
 
 # データ結合
 transaction = pd.concat([transaction_1, transaction_2], ignore_index=True)
@@ -94,9 +93,23 @@ print('join_data=', join_data)
 print('join_data=', join_data["item_price"].sum())
 
 # 表示列調整
-print('join_data2=', join_data[["transaction_id", "item_price"]])
+print('join_data2=', join_data[["transaction_id", "age"]])
 
+# 散布図で表示
+plt.scatter(join_data["birth"],
+         join_data["age"],
+         label='age')
 
+# 折れ線グラフで表示
+# plt.plot(join_data["transaction_id"],
+#          join_data["age"],
+#          label='age')
+
+# 凡例の表示
+plt.legend()
+
+# プロット表示(設定の反映)
+plt.show()
 
 # costomer_master.head()
 # print('costomer_master.head()=', costomer_master.head(0))

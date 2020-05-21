@@ -97,8 +97,19 @@ print('join_data2=', join_data[["transaction_id", "age"]])
 
 # 散布図で表示
 plt.scatter(join_data["birth"],
-         join_data["age"],
-         label='age')
+         join_data["age"]
+            )
+plt.title("scatter birth vqs age")
+plt.xlabel("birth")
+plt.ylabel("age")
+# plt.grid(True)
+
+
+# # 散布図で表示
+# plt.scatter(join_data["birth"],
+#          join_data["age"],
+#          label='age')
+#
 
 # 折れ線グラフで表示
 # plt.plot(join_data["transaction_id"],

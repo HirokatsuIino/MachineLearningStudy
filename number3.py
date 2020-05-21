@@ -14,6 +14,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
+# 各種データファイル読み込み -S
 item_master = pd.read_csv('sample_20200325/1章/item_master.csv', index_col=0)
 print('item_master-----------S')
 print(item_master)
@@ -30,9 +31,71 @@ transaction_detail_1 = pd.read_csv('sample_20200325/1章/transaction_detail_1.cs
 print('transaction_detail_1-----------S')
 print(transaction_detail_1)
 
+customer_master = pd.read_csv('sample_20200325/1章/customer_master.csv')
+print('customer_master-----------S')
+print(customer_master)
+
+item_master = pd.read_csv('sample_20200325/1章/item_master.csv')
+print('item_master-----------S')
+print(item_master)
+
+
+
+# 各種データファイル読み込み -E
+
+# データ結合
 transaction = pd.concat([transaction_1, transaction_2], ignore_index=True)
 print('transaction-----------S')
 print(transaction)
+
+
+# mergeでデータ結合
+# 結合先 transaction_detail_1
+# 結合データ transaction
+# 結合先で表示するデータ transaction の "transaction_id", "payment_date", "customer_id"
+# 結合条件 transaction_id
+join_data = pd.merge(
+    transaction_detail_1,
+    transaction[
+        ["transaction_id", "payment_date", "customer_id"]],
+    on="transaction_id",
+    how="left"
+)
+
+print('join_data=', join_data)
+
+
+# mergeでデータ結合
+# 結合先 join_data
+# 結合データ customer_master
+# 結合条件 customer_id
+join_data = pd.merge(
+    join_data,
+    customer_master,
+    on="customer_id",
+    how="left"
+)
+
+print('join_data=', join_data)
+
+# mergeでデータ結合
+# 結合先 join_data
+# 結合データ item_master
+# 結合条件 customer_id
+join_data = pd.merge(
+    join_data,
+    item_master,
+    on="item_id",
+    how="left"
+)
+
+print('join_data=', join_data)
+# print('join_data=', join_data["detail_id"])
+print('join_data=', join_data["item_price"].sum())
+
+# 表示列調整
+print('join_data2=', join_data[["transaction_id", "item_price"]])
+
 
 
 # costomer_master.head()
